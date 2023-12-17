@@ -19,7 +19,7 @@ public class FilesHandler {
         colors = new Color[imageH][imageW];
         for (int row = 0; row < imageH; row++) {
             for (int col = 0; col < imageW; col++) {
-                colors[row][col] = new Color(sampleImage.getRGB(col, row));
+                colors[row][col] = new Color(sampleImage.getRGB(row, col));
             }
         }
 //        for (int i = 0; i < imageH; i++){

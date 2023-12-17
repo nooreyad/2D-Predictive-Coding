@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        File file = new File("D:/GitHub/2D-Predictive-Coding/test.jpg");
+        File file = new File("test.jpg");
         FilesHandler handler = new FilesHandler();
         BufferedImage image = ImageIO.read(file);
         Color[][] imageArray = handler.get2DPixelArray(image);
@@ -47,7 +47,7 @@ public class Main {
                 g2d.drawImage(imageOut, null, 0, 0);
             }
         }
-        ImageIO.write(imageOut, "jpg", new File("D:/GitHub/2D-Predictive-Coding/newImage.jpg"));
+        ImageIO.write(imageOut, "jpg", new File("newImage.jpg"));
     }
 //    public static void main(String[] args) {
 //

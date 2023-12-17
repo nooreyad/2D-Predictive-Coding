@@ -3,7 +3,7 @@ public class Quantizer {
     int lowerVal;
     int upperVal;
     int dequantized;
-    private final int step = 64;
+    private final int step = 32;
     Quantizer(int quantize, int lowerVal){
         this.quantized = quantize;
         this.lowerVal = lowerVal;
