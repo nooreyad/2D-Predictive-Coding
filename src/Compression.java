@@ -55,7 +55,7 @@ public class Compression {
                 difference.get(row).add(image.get(row).get(col) - predictedImage.get(row).get(col));
                 calculateQuantizedAndDequantizedDifference(row, col);
                 int p = predictedImage.get(row).get(col);
-                int d = de_quantizedDifference.get(row).get(col);
+                int d = difference.get(row).get(col);
                 if (Math.abs(d) > p) decodedImage.get(row).add(p+ (Math.abs(d)/2));
                 else decodedImage.get(row).add(p + d);
             }
