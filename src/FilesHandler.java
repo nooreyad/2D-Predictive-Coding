@@ -120,5 +120,9 @@ public class FilesHandler {
         int decimal = Integer.parseInt(binaryString, 2);
         return (byte) decimal;
     }
-    
+
+    static int toUnsignedInteger(int b){
+        return b & 0xFF;
+    }
+
 }

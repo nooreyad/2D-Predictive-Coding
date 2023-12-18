@@ -158,11 +158,13 @@ public class Main {
 
         compressionFileWriter.write(image.getWidth());
         compressionFileWriter.write(image.getHeight());
+
         for (ArrayList<Integer> arr: originalStoredTopContent) {
             for (Integer integer : arr) {
                 compressionFileWriter.write(FilesHandler.toBinary(integer));
             }
         }
+
         for (ArrayList<Integer> arr: originalStoredLeftContent) {
             for (Integer integer : arr) {
                 compressionFileWriter.write(FilesHandler.toBinary(integer));
@@ -188,22 +190,22 @@ public class Main {
         ArrayList<Integer> originalLeftBorderBlue = new ArrayList<>();
 
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderRed.add(decompressionFileReader.read() & 0xFF);
+            originalTopBorderRed.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderGreen.add(decompressionFileReader.read() & 0xFF);
+            originalTopBorderGreen.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderBlue.add(decompressionFileReader.read() & 0xFF);
+            originalTopBorderBlue.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderRed.add(decompressionFileReader.read() & 0xFF);
+            originalLeftBorderRed.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderGreen.add(decompressionFileReader.read() & 0xFF);
+            originalLeftBorderGreen.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderBlue.add(decompressionFileReader.read() & 0xFF);
+            originalLeftBorderBlue.add(FilesHandler.toUnsignedInteger(decompressionFileReader.read()));
         }
 
         BufferedImage imageOut = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
