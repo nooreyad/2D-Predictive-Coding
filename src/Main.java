@@ -136,7 +136,6 @@ public class Main {
         Compression compressionBlue = new Compression(blues, handler.imageH, handler.imageW);
         compressedBlues = compressionBlue.compress();
 
-        System.out.println(image.getWidth());
     }
 
     public void decompress(String compressedFilePath, String decompressedFilePath) throws IOException {
