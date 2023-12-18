@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
@@ -124,22 +122,91 @@ public class Main {
         File file = new File("test.jpg");
         handler = new FilesHandler();
         image = ImageIO.read(file);
+
         Color[][] imageArray = handler.get2DPixelArray(image);
         ColorGetter colorGetter = new ColorGetter();
         ArrayList<ArrayList<Integer>> reds = colorGetter.getReds(imageArray, image.getHeight(), image.getWidth());
         ArrayList<ArrayList<Integer>> greens = colorGetter.getGreens(imageArray, image.getHeight(), image.getWidth());
         ArrayList<ArrayList<Integer>> blues = colorGetter.getBlues(imageArray, image.getHeight(), image.getWidth());
+
         Compression compressionRed = new Compression(reds, handler.imageH, handler.imageW);
         compressedReds = compressionRed.compress();
+        ArrayList<Integer> originalTopBorderRed = compressionRed.originalTopBorder;
+        ArrayList<Integer> originalLeftBorderRed = compressionRed.originalLeftBorder;
+
         Compression compressionGreen = new Compression(greens, handler.imageH, handler.imageW);
         compressedGreens = compressionGreen.compress();
+        ArrayList<Integer> originalTopBorderGreen = compressionGreen.originalTopBorder;
+        ArrayList<Integer> originalLeftBorderGreen = compressionGreen.originalLeftBorder;
+
         Compression compressionBlue = new Compression(blues, handler.imageH, handler.imageW);
         compressedBlues = compressionBlue.compress();
+        ArrayList<Integer> originalTopBorderBlue = compressionBlue.originalTopBorder;
+        ArrayList<Integer> originalLeftBorderBlue = compressionBlue.originalLeftBorder;
 
+        ArrayList<ArrayList<Integer>> originalStoredTopContent = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> originalStoredLeftContent = new ArrayList<>();
+        originalStoredTopContent.add(originalTopBorderRed);
+        originalStoredTopContent.add(originalTopBorderGreen);
+        originalStoredTopContent.add(originalTopBorderBlue);
+        originalStoredLeftContent.add(originalLeftBorderRed);
+        originalStoredLeftContent.add(originalLeftBorderGreen);
+        originalStoredLeftContent.add(originalLeftBorderBlue);
+
+        File compressionFile = new File("test-compressed.bin");
+        FileWriter compressionFileWriter = new FileWriter(compressionFile);
+
+        compressionFileWriter.write(image.getWidth());
+        compressionFileWriter.write(image.getHeight());
+        for (ArrayList<Integer> arr: originalStoredTopContent) {
+            for (Integer integer : arr) {
+                compressionFileWriter.write(FilesHandler.toBinary(integer));
+            }
+        }
+        for (ArrayList<Integer> arr: originalStoredLeftContent) {
+            for (Integer integer : arr) {
+                compressionFileWriter.write(FilesHandler.toBinary(integer));
+            }
+        }
+
+        compressionFileWriter.close();
     }
 
     public void decompress(String compressedFilePath, String decompressedFilePath) throws IOException {
-        BufferedImage imageOut = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        
+        File decompressionFile = new File("test-compressed.bin");
+        FileReader decompressionFileReader = new FileReader(decompressionFile);
+        
+        Integer imageWidth = decompressionFileReader.read();
+        Integer imageHeight = decompressionFileReader.read();
+
+        ArrayList<Integer> originalTopBorderRed = new ArrayList<>();
+        ArrayList<Integer> originalLeftBorderRed = new ArrayList<>();
+        ArrayList<Integer> originalTopBorderGreen = new ArrayList<>();
+        ArrayList<Integer> originalLeftBorderGreen = new ArrayList<>();
+        ArrayList<Integer> originalTopBorderBlue = new ArrayList<>();
+        ArrayList<Integer> originalLeftBorderBlue = new ArrayList<>();
+
+        for (int i = 0; i < imageWidth; i++) {
+            originalTopBorderRed.add(decompressionFileReader.read());
+        }
+        for (int i = 0; i < imageWidth; i++) {
+            originalTopBorderGreen.add(decompressionFileReader.read());
+        }
+        for (int i = 0; i < imageWidth; i++) {
+            originalTopBorderBlue.add(decompressionFileReader.read());
+        }
+        for (int i = 0; i < imageHeight; i++) {
+            originalLeftBorderRed.add(decompressionFileReader.read());
+        }
+        for (int i = 0; i < imageHeight; i++) {
+            originalLeftBorderGreen.add(decompressionFileReader.read());
+        }
+        for (int i = 0; i < imageHeight; i++) {
+            originalLeftBorderBlue.add(decompressionFileReader.read());
+        }
+
+        BufferedImage imageOut = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
         System.out.println("here");
         System.out.println(image.getWidth() + " " + image.getHeight());

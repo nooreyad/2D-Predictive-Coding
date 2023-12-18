@@ -11,6 +11,9 @@ public class Compression {
     ArrayList<ArrayList<Integer>> quantizedDifference = new ArrayList<>();
     ArrayList<ArrayList<Integer>> de_quantizedDifference = new ArrayList<>();
     ArrayList<ArrayList<Integer>> decodedImage = new ArrayList<>();
+    ArrayList<Integer> originalTopBorder = new ArrayList<>();
+    ArrayList<Integer> originalLeftBorder = new ArrayList<>();
+
     Compression(ArrayList<ArrayList<Integer>> image, int h, int w){
         this.image = image;
         this.imageW = w;
@@ -24,6 +27,12 @@ public class Compression {
             quantizedDifference.add(new ArrayList<>());
             de_quantizedDifference.add(new ArrayList<>());
             for (int col = 0; col < imageW; col++){
+                if (row == 0){
+                    originalTopBorder.add(image.get(row).get(col));
+                }
+                if (col == 0){
+                    originalLeftBorder.add(image.get(row).get(col));
+                }
                 if (col == 0 || row == 0){
                     predictedImage.get(row).add(image.get(row).get(col));
                     decodedImage.get(row).add(image.get(row).get(col));

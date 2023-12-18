@@ -107,17 +107,18 @@ public class FilesHandler {
 //        return compressedValues;
 //    }
 //
-//    private static byte toBinary(int num){
-//        StringBuilder binaryString = new StringBuilder();
-//        for(int i = 7; i >= 0; i--){
-//            int bit = (num >> i) & 1;
-//            binaryString.append(bit);
-//        }
-//        return binaryStringToByte(binaryString.toString());
-//    }
-//
-//    private static byte binaryStringToByte(String binaryString){
-//        int decimal = Integer.parseInt(binaryString, 2);
-//        return (byte) decimal;
-//    }
+    static byte toBinary(int num){
+        StringBuilder binaryString = new StringBuilder();
+        for(int i = 7; i >= 0; i--){
+            int bit = (num >> i) & 1;
+            binaryString.append(bit);
+        }
+        return binaryStringToByte(binaryString.toString());
+    }
+
+    static byte binaryStringToByte(String binaryString){
+        int decimal = Integer.parseInt(binaryString, 2);
+        return (byte) decimal;
+    }
+    
 }
