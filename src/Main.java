@@ -188,22 +188,22 @@ public class Main {
         ArrayList<Integer> originalLeftBorderBlue = new ArrayList<>();
 
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderRed.add(decompressionFileReader.read());
+            originalTopBorderRed.add(decompressionFileReader.read() & 0xFF);
         }
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderGreen.add(decompressionFileReader.read());
+            originalTopBorderGreen.add(decompressionFileReader.read() & 0xFF);
         }
         for (int i = 0; i < imageWidth; i++) {
-            originalTopBorderBlue.add(decompressionFileReader.read());
+            originalTopBorderBlue.add(decompressionFileReader.read() & 0xFF);
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderRed.add(decompressionFileReader.read());
+            originalLeftBorderRed.add(decompressionFileReader.read() & 0xFF);
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderGreen.add(decompressionFileReader.read());
+            originalLeftBorderGreen.add(decompressionFileReader.read() & 0xFF);
         }
         for (int i = 0; i < imageHeight; i++) {
-            originalLeftBorderBlue.add(decompressionFileReader.read());
+            originalLeftBorderBlue.add(decompressionFileReader.read() & 0xFF);
         }
 
         BufferedImage imageOut = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
